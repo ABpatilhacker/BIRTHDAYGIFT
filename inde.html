@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: radial-gradient(circle at top, #1b0024, #000000);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+/* Stars */
+.star {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.2; }
+    to { opacity: 1; }
+}
+
+/* Main Content */
+.container {
+    margin-top: 20vh;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2rem;
+    text-shadow: 0 0 20px #ff66cc;
+}
+
+.typing {
+    font-size: 1.1rem;
+    margin-top: 20px;
+    min-height: 80px;
+    line-height: 1.6;
+}
+
+button {
+    margin-top: 30px;
+    padding: 12px 28px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #ff0080, #ff66cc);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff66cc;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    color: #ff66cc;
+    animation: float 5s linear forwards;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* Final Message */
+#finalMessage {
+    display: none;
+    font-size: 2rem;
+    margin-top: 40px;
+    text-shadow: 0 0 25px #ff66cc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Tonight... the universe feels special ✨</h1>
+    <div class="typing" id="typing"></div>
+    <button onclick="startSurprise()">Click Only If You Promise To Smile 💕</button>
+    <div id="finalMessage">
+        Happy Birthday My Favourite Human ❤️🎂
+    </div>
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="guzarish.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* Typing Effect */
+const messages = [
+"On this day, someone incredibly special was born...",
+"Someone who made my world brighter...",
+"And today, the universe celebrates YOU..."
+];
+
+let line = 0;
+let charIndex = 0;
+const typingDiv = document.getElementById("typing");
+
+function typeEffect() {
+    if (line < messages.length) {
+        if (charIndex < messages[line].length) {
+            typingDiv.innerHTML += messages[line].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeEffect, 50);
+        } else {
+            typingDiv.innerHTML += "<br><br>";
+            line++;
+            charIndex = 0;
+            setTimeout(typeEffect, 800);
+        }
+    }
+}
+typeEffect();
+
+/* Create Stars */
+for (let i = 0; i < 100; i++) {
+    let star = document.createElement("div");
+    star.className = "star";
+    star.style.top = Math.random() * 100 + "vh";
+    star.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(star);
+}
+
+/* Floating Hearts */
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+}, 900);
+
+/* Surprise Function */
+function startSurprise() {
+
+    document.getElementById("bgMusic").play();
+
+    for (let i = 0; i < 50; i++) {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💗";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.fontSize = "22px";
+        heart.style.transform = `translate(${Math.random()*500-250}px, ${Math.random()*500-250}px)`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 2000);
+    }
+
+    document.getElementById("finalMessage").style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
