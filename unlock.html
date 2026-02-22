@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Only For Ishu 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:radial-gradient(circle,#1b0024,#000);
+font-family:sans-serif;
+color:white;
+text-align:center;
+overflow:hidden;
+}
+
+.box{
+width:90%;
+max-width:400px;
+}
+
+input{
+padding:10px;
+border:none;
+border-radius:20px;
+text-align:center;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#ff0080,#ff66cc);
+color:white;
+margin-top:20px;
+cursor:pointer;
+box-shadow:0 0 20px pink;
+display:none;
+}
+
+.typing{
+margin-top:20px;
+min-height:100px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Enter The Word That Means Everything 💖</h2>
+<input type="password" id="pass" placeholder="Hint: Her nickname">
+<br>
+<button id="unlockBtn" onclick="checkPass()">Unlock 💕</button>
+
+<div class="typing" id="typing"></div>
+<button id="enterBtn" onclick="goNext()">Continue My Love ✨</button>
+
+</div>
+
+<script>
+
+const correctPassword="ishu";
+
+document.getElementById("pass").addEventListener("input",function(){
+if(this.value.length>0){
+document.getElementById("unlockBtn").style.display="inline-block";
+}
+});
+
+function checkPass(){
+let val=document.getElementById("pass").value.toLowerCase();
+if(val===correctPassword){
+startTyping();
+document.querySelector("input").style.display="none";
+document.getElementById("unlockBtn").style.display="none";
+}else{
+alert("Wrong password 😜");
+}
+}
+
+const message=[
+"From the day you came into my life...",
+"My world became softer, brighter, warmer...",
+"Your smile feels like home...",
+"And today is all about celebrating you, Ishu 💕"
+];
+
+let line=0;
+let char=0;
+
+function startTyping(){
+function type(){
+if(line<message.length){
+if(char<message[line].length){
+document.getElementById("typing").innerHTML+=message[line].charAt(char);
+char++;
+setTimeout(type,40);
+}else{
+document.getElementById("typing").innerHTML+="<br><br>";
+line++;
+char=0;
+setTimeout(type,800);
+}
+}else{
+document.getElementById("enterBtn").style.display="inline-block";
+}
+}
+type();
+}
+
+function goNext(){
+window.location.href="surprise.html";
+}
+
+</script>
+
+</body>
+</html>
