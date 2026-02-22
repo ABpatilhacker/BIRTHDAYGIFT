@@ -6,107 +6,111 @@
 
 <style>
 body{
-    margin:0;
-    background: radial-gradient(circle at top,#1b0024,#000);
-    font-family:sans-serif;
-    color:white;
-    text-align:center;
-    overflow-x:hidden;
+margin:0;
+background:radial-gradient(circle at top,#1b0024,#000);
+font-family:sans-serif;
+color:white;
+text-align:center;
+overflow-x:hidden;
 }
 
-/* Stars */
+/* stars */
 .star{
-    position:fixed;
-    width:2px;
-    height:2px;
-    background:white;
-    border-radius:50%;
-    animation:twinkle 2s infinite alternate;
+position:fixed;
+width:2px;
+height:2px;
+background:white;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
 }
 @keyframes twinkle{
-    from{opacity:0.3;}
-    to{opacity:1;}
-}
-
-/* Slideshow */
-.slideshow{
-    margin-top:30px;
-}
-.slideshow img{
-    width:80%;
-    max-width:300px;
-    border-radius:20px;
-    box-shadow:0 0 20px #ff66cc;
-}
-
-/* Floating hearts */
-.heart{
-    position:fixed;
-    color:#ff66cc;
-    animation:float 5s linear forwards;
-}
-@keyframes float{
-    from{transform:translateY(100vh);}
-    to{transform:translateY(-10vh);opacity:0;}
+from{opacity:0.3;}
+to{opacity:1;}
 }
 
 h1{
-    margin-top:40px;
-    text-shadow:0 0 25px #ff66cc;
+margin-top:30px;
+text-shadow:0 0 25px #ff66cc;
 }
+
+.slideshow img{
+width:80%;
+max-width:320px;
+border-radius:20px;
+box-shadow:0 0 20px #ff66cc;
+margin-top:20px;
+cursor:pointer;
+}
+
+.heart{
+position:fixed;
+color:#ff66cc;
+animation:explode 1.5s linear forwards;
+}
+
+@keyframes explode{
+from{transform:translate(0,0);opacity:1;}
+to{transform:translate(var(--x),var(--y));opacity:0;}
+}
+
 </style>
 </head>
 
 <body>
 
 <h1>Happy Birthday Ishu 💕🎂</h1>
-
-<p>On this day, my favorite person was born ✨</p>
+<p>You are my favorite notification, my favorite smile, my favorite everything ✨</p>
 
 <div class="slideshow">
-    <img id="slide" src="photo1.jpg">
+<img id="slide" src="photo1.jpg" onclick="explodeHearts(event)">
 </div>
 
-<audio id="music" autoplay loop>
-    <source src="guzarish.mp3" type="audio/mpeg">
+<audio id="music" loop>
+<source src="guzarish.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-/* Stars */
+/* stars */
 for(let i=0;i<100;i++){
-    let star=document.createElement("div");
-    star.className="star";
-    star.style.top=Math.random()*100+"vh";
-    star.style.left=Math.random()*100+"vw";
-    document.body.appendChild(star);
+let star=document.createElement("div");
+star.className="star";
+star.style.top=Math.random()*100+"vh";
+star.style.left=Math.random()*100+"vw";
+document.body.appendChild(star);
 }
 
-/* Slideshow */
+/* slideshow */
 let images=["photo1.jpg","photo2.jpg","photo3.jpg"];
 let i=0;
 setInterval(()=>{
-    i=(i+1)%images.length;
-    document.getElementById("slide").src=images[i];
+i=(i+1)%images.length;
+document.getElementById("slide").src=images[i];
 },3000);
 
-/* Floating Hearts */
-setInterval(()=>{
-    let heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="💖";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(Math.random()*20+15)+"px";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),5000);
-},800);
+/* play music on first interaction */
+window.addEventListener("click",function(){
+document.getElementById("music").play();
+},{once:true});
 
-/* Fix autoplay issue */
-window.addEventListener("click", function(){
-    document.getElementById("music").play();
-});
+/* heart explosion */
+function explodeHearts(e){
+for(let j=0;j<25;j++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💖";
+heart.style.left=e.clientX+"px";
+heart.style.top=e.clientY+"px";
+heart.style.setProperty("--x",(Math.random()*300-150)+"px");
+heart.style.setProperty("--y",(Math.random()*300-150)+"px");
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),1500);
+}
+}
 
 </script>
 
+</body>
+</html>
 </body>
 </html>
