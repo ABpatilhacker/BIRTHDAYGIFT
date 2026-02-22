@@ -3,49 +3,127 @@
 <head>
 <title>For Ishu 💕</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background: radial-gradient(circle, #1a001f, #000);
-    font-family:sans-serif;
-    color:white;
-    text-align:center;
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:radial-gradient(circle,#1b0024,#000);
+font-family:sans-serif;
+color:white;
+text-align:center;
+overflow:hidden;
 }
 
-h1{
-    text-shadow:0 0 20px #ff66cc;
+.box{
+width:90%;
+max-width:400px;
+}
+
+input{
+padding:10px;
+border:none;
+border-radius:20px;
+margin-top:10px;
+text-align:center;
 }
 
 button{
-    padding:15px 30px;
-    border:none;
-    border-radius:30px;
-    background:linear-gradient(45deg,#ff0080,#ff66cc);
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-    box-shadow:0 0 20px pink;
+padding:12px 25px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#ff0080,#ff66cc);
+color:white;
+margin-top:20px;
+cursor:pointer;
+display:none;
+box-shadow:0 0 20px pink;
+}
+
+h1{
+text-shadow:0 0 20px #ff66cc;
+}
+
+.typing{
+margin-top:20px;
+min-height:80px;
 }
 </style>
 </head>
 
 <body>
 
-<div>
-    <h1>Something Special For Ishu 💕</h1>
-    <p>Click below and enter my universe ✨</p>
-    <button onclick="goNext()">Enter</button>
+<div class="box">
+
+<h1>Enter Password For Ishu 💕</h1>
+
+<input type="password" id="pass" placeholder="Enter special word">
+<br>
+<button id="unlockBtn" onclick="checkPass()">Unlock</button>
+
+<div class="typing" id="typing"></div>
+<button id="enterBtn" onclick="goNext()">Enter My Heart 💖</button>
+
 </div>
 
 <script>
-function goNext(){
-    window.location.href = "surprise.html";
+
+const correctPassword="ishu";  // change if you want
+
+document.getElementById("pass").addEventListener("input",function(){
+if(this.value.length>0){
+document.getElementById("unlockBtn").style.display="inline-block";
 }
+});
+
+function checkPass(){
+let val=document.getElementById("pass").value.toLowerCase();
+if(val===correctPassword){
+startTyping();
+document.querySelector("input").style.display="none";
+document.getElementById("unlockBtn").style.display="none";
+document.querySelector("h1").innerText="Tonight is all about you ✨";
+}else{
+alert("Wrong password 😜");
+}
+}
+
+const message=[
+"I still remember the day you entered my life...",
+"And since then, everything feels brighter...",
+"Your smile makes my world softer...",
+"And today... the universe celebrates YOU Ishu 💕"
+];
+
+let line=0;
+let char=0;
+
+function startTyping(){
+function type(){
+if(line<message.length){
+if(char<message[line].length){
+document.getElementById("typing").innerHTML+=message[line].charAt(char);
+char++;
+setTimeout(type,40);
+}else{
+document.getElementById("typing").innerHTML+="<br><br>";
+line++;
+char=0;
+setTimeout(type,800);
+}
+}else{
+document.getElementById("enterBtn").style.display="inline-block";
+}
+}
+type();
+}
+
+function goNext(){
+window.location.href="surprise.html";
+}
+
 </script>
 
 </body>
