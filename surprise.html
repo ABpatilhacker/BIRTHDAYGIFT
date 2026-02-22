@@ -29,7 +29,7 @@ to{opacity:1;}
 }
 
 h1{
-margin-top:30px;
+margin-top:40px;
 text-shadow:0 0 25px #ff66cc;
 }
 
@@ -59,17 +59,22 @@ to{transform:translate(var(--x),var(--y));opacity:0;}
 <body>
 
 <h1>Happy Birthday Ishu 💕🎂</h1>
-<p>You are my favorite notification, my favorite smile, my favorite everything ✨</p>
+<p>You are my safest place, my happiest moment, my forever favorite person ✨</p>
 
 <div class="slideshow">
 <img id="slide" src="photo1.jpg" onclick="explodeHearts(event)">
 </div>
 
-<audio id="music" loop>
+<audio id="music" autoplay loop>
 <source src="guzarish.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+
+/* play music immediately when page loads */
+window.onload=function(){
+document.getElementById("music").play().catch(()=>{});
+};
 
 /* stars */
 for(let i=0;i<100;i++){
@@ -88,11 +93,6 @@ i=(i+1)%images.length;
 document.getElementById("slide").src=images[i];
 },3000);
 
-/* play music on first interaction */
-window.addEventListener("click",function(){
-document.getElementById("music").play();
-},{once:true});
-
 /* heart explosion */
 function explodeHearts(e){
 for(let j=0;j<25;j++){
@@ -110,7 +110,5 @@ setTimeout(()=>heart.remove(),1500);
 
 </script>
 
-</body>
-</html>
 </body>
 </html>
