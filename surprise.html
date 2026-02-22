@@ -108,7 +108,8 @@ transform:translateY(0);
 <p>You are my favorite notification, my favorite smile, my favorite everything ✨</p>
 
 <div class="slideshow">
-<img id="slide" src="photo1.jpg" onclick="explodeHearts(event)">
+  <img id="slide" src="photo1.jpg" onclick="heartExplosion()">
+  <p id="photoMessage" class="photo-text"></p>
 </div>
 
 <!-- WHY I LOVE YOU CARDS -->
@@ -140,7 +141,38 @@ because today is YOUR day ✨
 </audio>
 
 <script>
+.slideshow{
+text-align:center;
+margin-top:30px;
+}
 
+.slideshow img{
+width:80%;
+max-width:320px;
+border-radius:20px;
+box-shadow:0 0 25px #ff66cc;
+cursor:pointer;
+animation: zoomEffect 6s ease-in-out infinite alternate;
+transition: opacity 1s ease-in-out;
+}
+
+@keyframes zoomEffect{
+from{ transform: scale(1); }
+to{ transform: scale(1.08); }
+}
+
+.photo-text{
+color:white;
+font-size:18px;
+margin-top:15px;
+text-shadow:0 0 10px pink;
+animation: fadeText 1s ease-in-out;
+}
+
+@keyframes fadeText{
+from{opacity:0;}
+to{opacity:1;}
+}
 /* PLAY MUSIC */
 window.onload=function(){
 document.getElementById("music").play().catch(()=>{});
@@ -164,16 +196,33 @@ let images=[
 "photo5.jpg"
 ];
 
+let messages=[
+"You look so cute here Ishu 💕",
+"My favorite smile in the world 😌✨",
+"This moment lives rent free in my heart 💖",
+"Every photo of you is my favorite 🥺",
+"How are you this beautiful huh? 😍"
+];
+
 let i=0;
-setInterval(()=>{
+
+function changeSlide(){
 let img=document.getElementById("slide");
+let text=document.getElementById("photoMessage");
+
 img.style.opacity=0;
+
 setTimeout(()=>{
 i=(i+1)%images.length;
 img.src=images[i];
+text.innerText=messages[i];
 img.style.opacity=1;
 },500);
-},3000);
+}
+
+document.getElementById("photoMessage").innerText=messages[0];
+
+setInterval(changeSlide,4000);
 
 /* Heart Explosion */
 function explodeHearts(e){
