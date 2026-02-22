@@ -12,9 +12,10 @@ font-family:sans-serif;
 color:white;
 text-align:center;
 overflow-x:hidden;
+scroll-behavior:smooth;
 }
 
-/* stars */
+/* Stars */
 .star{
 position:fixed;
 width:2px;
@@ -42,27 +43,95 @@ margin-top:20px;
 cursor:pointer;
 }
 
+/* Heart explosion */
 .heart{
 position:fixed;
 color:#ff66cc;
 animation:explode 1.5s linear forwards;
 }
-
 @keyframes explode{
 from{transform:translate(0,0);opacity:1;}
 to{transform:translate(var(--x),var(--y));opacity:0;}
 }
 
+/* Love Cards */
+.cards{
+margin-top:50px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+padding:15px 20px;
+border-radius:20px;
+box-shadow:0 0 15px #ff66cc;
+width:80%;
+max-width:350px;
+opacity:0;
+transform:translateY(20px);
+transition:1s;
+}
+
+.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* Love Letter */
+.letter{
+margin-top:80px;
+padding:20px;
+max-width:600px;
+margin-left:auto;
+margin-right:auto;
+line-height:1.8;
+font-size:18px;
+opacity:0;
+transform:translateY(40px);
+transition:1.5s;
+}
+
+.showLetter{
+opacity:1;
+transform:translateY(0);
+}
 </style>
 </head>
 
 <body>
 
 <h1>Happy Birthday Ishu 💕🎂</h1>
-<p>You are my safest place, my happiest moment, my forever favorite person ✨</p>
+<p>You are my favorite notification, my favorite smile, my favorite everything ✨</p>
 
 <div class="slideshow">
 <img id="slide" src="photo1.jpg" onclick="explodeHearts(event)">
+</div>
+
+<!-- WHY I LOVE YOU CARDS -->
+<div class="cards" id="cards">
+<div class="card">I love the way you smile randomly 😌</div>
+<div class="card">I love how you make boring days fun 💕</div>
+<div class="card">I love your cute little mood swings 😂</div>
+<div class="card">I love that I get to call you mine 💖</div>
+</div>
+
+<!-- LOVE LETTER -->
+<div class="letter" id="loveLetter">
+Hey birthday girl 💕  
+You’re not just special today…  
+You’re special every single day.  
+
+You somehow turned my normal life  
+into something way more beautiful.  
+
+And honestly…  
+I’m really lucky you exist 😌  
+
+Now go smile…  
+because today is YOUR day ✨  
 </div>
 
 <audio id="music" autoplay loop>
@@ -71,12 +140,12 @@ to{transform:translate(var(--x),var(--y));opacity:0;}
 
 <script>
 
-/* play music immediately when page loads */
+/* PLAY MUSIC */
 window.onload=function(){
 document.getElementById("music").play().catch(()=>{});
 };
 
-/* stars */
+/* Stars */
 for(let i=0;i<100;i++){
 let star=document.createElement("div");
 star.className="star";
@@ -85,7 +154,7 @@ star.style.left=Math.random()*100+"vw";
 document.body.appendChild(star);
 }
 
-/* slideshow */
+/* Slideshow */
 let images=["photo1.jpg","photo2.jpg","photo3.jpg"];
 let i=0;
 setInterval(()=>{
@@ -93,7 +162,7 @@ i=(i+1)%images.length;
 document.getElementById("slide").src=images[i];
 },3000);
 
-/* heart explosion */
+/* Heart Explosion */
 function explodeHearts(e){
 for(let j=0;j<25;j++){
 let heart=document.createElement("div");
@@ -107,6 +176,25 @@ document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),1500);
 }
 }
+
+/* Auto reveal cards one by one */
+let cards=document.querySelectorAll(".card");
+cards.forEach((card,index)=>{
+setTimeout(()=>{
+card.classList.add("show");
+},1500*(index+1));
+});
+
+/* Love letter reveal on scroll */
+window.addEventListener("scroll",function(){
+let letter=document.getElementById("loveLetter");
+let position=letter.getBoundingClientRect().top;
+let screenPosition=window.innerHeight/1.2;
+
+if(position<screenPosition){
+letter.classList.add("showLetter");
+}
+});
 
 </script>
 
