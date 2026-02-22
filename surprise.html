@@ -5,6 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+  body{
+margin:0;
+padding:0;
+background:linear-gradient(to bottom,#1a001a,#330033);
+overflow-x:hidden;
+font-family: 'Segoe UI', sans-serif;
+}
+
+.hearts{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+pointer-events:none;
+overflow:hidden;
+z-index:-1;
+}
+
+.heart{
+position:absolute;
+color:#ff4da6;
+font-size:20px;
+animation: floatUp linear infinite;
+opacity:0.7;
+}
+
+@keyframes floatUp{
+from{
+transform: translateY(100vh) scale(0.5);
+opacity:1;
+}
+to{
+transform: translateY(-10vh) scale(1.2);
+opacity:0;
+}
+}
 body{
 margin:0;
 background:radial-gradient(circle at top,#1b0024,#000);
@@ -99,11 +136,46 @@ transition:1.5s;
 opacity:1;
 transform:translateY(0);
 }
+  .ending{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:radial-gradient(circle,#330033,#000);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+opacity:0;
+pointer-events:none;
+transition:opacity 2s ease-in-out;
+}
+
+.ending h1{
+font-size:40px;
+color:#ff66cc;
+text-shadow:0 0 20px #ff66cc, 0 0 40px #ff1493;
+animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{text-shadow:0 0 10px #ff66cc;}
+to{text-shadow:0 0 30px #ff1493;}
+}
+
+.ending p{
+margin-top:20px;
+font-size:18px;
+max-width:80%;
+}
 </style>
 </head>
 
 <body>
-
+<div class="hearts"></div>
 <h1>Happy Birthday Ishu 💕🎂</h1>
 <p>You are my favorite notification, my favorite smile, my favorite everything ✨</p>
 
@@ -257,8 +329,34 @@ if(position<screenPosition){
 letter.classList.add("showLetter");
 }
 });
+// Floating hearts generator
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💖";
 
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(3+Math.random()*3)+"s";
+heart.style.fontSize=(15+Math.random()*25)+"px";
+
+document.querySelector(".hearts").appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},6000);
+
+},300);
+  // After 30 seconds show ending page
+setTimeout(()=>{
+document.getElementById("endingPage").style.opacity=1;
+document.getElementById("endingPage").style.pointerEvents="auto";
+},30000);
 </script>
-
+<div id="endingPage" class="ending">
+  <h1>I Love You Ishu 💕</h1>
+  <p>You are my favorite notification,  
+  my happiest moment,  
+  and my forever person 😌✨</p>
+</div>
 </body>
 </html>
