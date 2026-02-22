@@ -13,10 +13,9 @@ font-family:sans-serif;
 color:white;
 text-align:center;
 overflow-x:hidden;
-scroll-behavior:smooth;
 }
 
-/* Floating Background Hearts */
+/* Floating Hearts Background */
 .hearts{
 position:fixed;
 width:100%;
@@ -24,7 +23,6 @@ height:100%;
 top:0;
 left:0;
 pointer-events:none;
-overflow:hidden;
 z-index:-1;
 }
 
@@ -80,15 +78,15 @@ to{ transform: scale(1.08); }
 font-size:18px;
 margin-top:15px;
 text-shadow:0 0 10px pink;
+min-height:30px;
 }
 
-/* Explosion hearts */
+/* Explosion */
 .explode-heart{
 position:fixed;
 color:#ff66cc;
 animation:explode 1.5s linear forwards;
 }
-
 @keyframes explode{
 from{transform:translate(0,0);opacity:1;}
 to{transform:translate(var(--x),var(--y));opacity:0;}
@@ -138,6 +136,26 @@ opacity:1;
 transform:translateY(0);
 }
 
+/* Final Button */
+#finalBtn{
+margin:60px 0;
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:#ff66cc;
+color:white;
+font-size:16px;
+box-shadow:0 0 20px #ff66cc;
+cursor:pointer;
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.08);}
+100%{transform:scale(1);}
+}
+
 /* Ending Page */
 .ending{
 position:fixed;
@@ -145,41 +163,43 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:radial-gradient(circle,#330033,#000);
+background:linear-gradient(-45deg,#ff66cc,#330033,#ff1493,#000);
+background-size:400% 400%;
+animation:gradientMove 8s ease infinite;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-text-align:center;
 opacity:0;
 pointer-events:none;
-transition:opacity 2s ease-in-out;
+transition:opacity 2s ease;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
 .ending h1{
-font-size:40px;
-color:#ff66cc;
+font-size:42px;
 animation: glow 2s infinite alternate;
 }
 
 @keyframes glow{
-from{text-shadow:0 0 10px #ff66cc;}
-to{text-shadow:0 0 30px #ff1493;}
+from{text-shadow:0 0 10px #fff;}
+to{text-shadow:0 0 30px #fff;}
 }
 
-/* Confetti hearts */
+/* Confetti */
 .confetti{
 position:fixed;
 top:-20px;
-color:#ff66cc;
+color:white;
 animation: fall 4s linear forwards;
 }
-
 @keyframes fall{
-to{
-transform: translateY(110vh) rotate(360deg);
-opacity:0;
-}
+to{transform:translateY(110vh) rotate(360deg);opacity:0;}
 }
 </style>
 </head>
@@ -197,7 +217,7 @@ opacity:0;
 </div>
 
 <div class="cards">
-<div class="card">I love the way you smile randomly 😌</div>
+<div class="card">I love the way your eyes sparkle when you smile 👀✨</div>
 <div class="card">I love how you make boring days fun 💕</div>
 <div class="card">I love your cute little mood swings 😂</div>
 <div class="card">I love that I get to call you mine 💖</div>
@@ -210,19 +230,21 @@ You make my world brighter.
 I’m lucky you exist 😌✨  
 </div>
 
+<button id="finalBtn">One Last Surprise 💕</button>
+
 <audio id="music" loop>
 <source src="guzarish.mp3" type="audio/mpeg">
 </audio>
 
 <div id="endingPage" class="ending">
 <h1>I Love You Ishu 💕</h1>
-<p>My happiest moment. My forever person 😌✨</p>
+<p>You are my today, my tomorrow, and everything in between 😌✨</p>
 </div>
 
 <script>
 
-/* Start music on first tap */
-document.body.addEventListener("click",function(){
+/* Auto music on first interaction */
+window.addEventListener("click",()=>{
 document.getElementById("music").play();
 },{once:true});
 
@@ -235,7 +257,7 @@ star.style.left=Math.random()*100+"vw";
 document.body.appendChild(star);
 }
 
-/* Floating background hearts */
+/* Floating Hearts */
 setInterval(()=>{
 let heart=document.createElement("div");
 heart.className="bg-heart";
@@ -250,10 +272,10 @@ setTimeout(()=>heart.remove(),6000);
 /* Slideshow */
 let images=["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"];
 let messages=[
-"You look so cute here Ishu 💕",
+"Those eyes… I could get lost in them forever 👀💕",
 "My favorite smile in the world 😌✨",
 "This moment lives rent free in my heart 💖",
-"Every photo of you is my favorite 🥺",
+"You make everything look magical 🥺",
 "How are you this beautiful huh? 😍"
 ];
 
@@ -272,8 +294,8 @@ img.style.opacity=1;
 },500);
 },4000);
 
-/* Explosion on tap */
-img.addEventListener("click",function(e){
+/* Heart Explosion */
+img.addEventListener("click",(e)=>{
 for(let j=0;j<25;j++){
 let heart=document.createElement("div");
 heart.className="explode-heart";
@@ -287,21 +309,18 @@ setTimeout(()=>heart.remove(),1500);
 }
 });
 
-/* Reveal cards */
+/* Auto reveal cards */
 document.querySelectorAll(".card").forEach((card,index)=>{
 setTimeout(()=>card.classList.add("show"),1500*(index+1));
 });
 
-/* Reveal letter on scroll */
-window.addEventListener("scroll",function(){
-let letter=document.getElementById("loveLetter");
-if(letter.getBoundingClientRect().top < window.innerHeight/1.2){
-letter.classList.add("showLetter");
-}
-});
-
-/* Ending after 30 sec */
+/* Auto reveal letter */
 setTimeout(()=>{
+document.getElementById("loveLetter").classList.add("showLetter");
+},8000);
+
+/* Final Page */
+document.getElementById("finalBtn").addEventListener("click",()=>{
 let ending=document.getElementById("endingPage");
 ending.style.opacity=1;
 ending.style.pointerEvents="auto";
@@ -316,8 +335,7 @@ c.style.fontSize=(15+Math.random()*25)+"px";
 document.body.appendChild(c);
 setTimeout(()=>c.remove(),4000);
 },200);
-
-},30000);
+});
 
 </script>
 
